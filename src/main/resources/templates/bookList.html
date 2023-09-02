@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <link href="../static/css/main.css" type="text/css" th:href="@{/css/main.css}" rel="stylesheet" />
+    <script href="../static/js/index.js" type="text/javascript" th:src="@{/js/index.js}"></script>
+    <title>Kathai</title>
+  </head>
+  <body>
+    <div class="item1">
+      <img src="../static/images/f3.png" th:src="@{/images/f3.png}" alt="Title" />
+    </div>
+
+    <div class="item2">
+      <button class="openbtn" onclick="openNav()"><span>☰ Menu</span></button>
+    <div id="mySidebar" class="sidebar">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
+        >x</a
+      >
+
+        <a href="bookList.html" class="active">Home</a><br>
+
+        <button class="dropdown-btn">
+          Books
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+          <a href="https://spacecupcake1.github.io/Kathai/HTML/modu.html">Silent Reading</a>
+          <a href="https://spacecupcake1.github.io/Kathai/HTML/alf.html">A Little Life</a>
+        </div> <br>
+
+        <button class="dropdown-btn">
+          Characters 
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+          <a href="https://spacecupcake1.github.io/Kathai/HTML/kaz.html">Kaz Brekker</a>
+          <a href="https://spacecupcake1.github.io/Kathai/HTML/inej.html">Inej Ghafa</a>
+        </div><br>
+        <a href="https://spacecupcake1.github.io/Kathai/HTML/form.html">Contact Form</a>
+    </div>
+    </div>
+
+    <div class="transbox">
+      <div class="grid-container">
+
+        <div class="item3">
+          <h1>Book List</h1>
+          <table>
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Book</th>
+                <th>Author</th>
+                <th>Pages</th>
+                <th>Rating</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="book : ${bookList}">
+
+                <td th:text="${book.id}">Book-Id</td>
+                <td th:text="${book.title}">Title</td>
+                <td th:text="${book.author}">Author</td>
+                <td th:text="${book.page}">Pages</td>
+                <td th:text="${book.rating}">Rating</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="item4">
+          <b>footer</b>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

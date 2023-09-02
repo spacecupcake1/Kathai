@@ -1,0 +1,221 @@
+:root {
+  --apricot: #fbc4ab;
+  --red: #6f0000;
+  --royal: #1e2895;
+  --blue: #8ec3f5;
+  --black: #000000;
+  --white: #ffffff;
+}
+
+
+body{
+    background-image: url(../images/m6.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
+}
+
+div.transbox {
+    margin: 20px; 
+    padding: 5px;
+    background-color: #ffffff; 
+    background-size: 100% 100%; 
+    opacity: 0.8;
+}  
+
+img {
+  opacity: 1;
+}
+
+img.thumb {
+  opacity: 1;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  transition: transform 0.2s;
+  border: 2px solid var(--black);
+}
+
+img.thumb:hover {
+  transform: scale(1.8);
+}
+
+.item1 { grid-area: header; text-align: center; }
+.item2 { 
+  grid-area: menu; 
+  text-align:left; 
+  top: 0;
+  left: 0;
+  position: absolute;
+} 
+.item3 { grid-area: main; }
+.item4 { grid-area: footer; text-align:center; }
+
+.grid-container {
+    display: grid;
+    grid-template-areas:
+      'menu header header header header header'
+      'main main main main main main '                
+      'footer footer footer footer footer footer';
+    gap: 2px;
+    padding: 2px;
+  }
+  
+  /* .grid-container > div {
+    border: 15px solid rgba(0, 0, 0, 0.8);
+    padding: 5px 0;
+  }  */
+
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #000000;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    transition: transform 0.2s;
+    border: 2px solid var(--black);
+  }
+  
+  .center:hover {
+    transform: scale(1.5);
+  }
+  
+  .checked {
+    color: var(--red);
+  }
+  
+  a {
+    color: var(--apricot);
+    text-decoration: none;
+  }
+  
+  .sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    background-color: var(--black);
+  }
+  
+  .sidebar a, .dropdown-btn {
+    padding: 8px 8px 8px 16px;
+    text-decoration: none;
+    font-size: 27px;
+    display: block;
+    transition: 0.3s;
+    color: var(--white);
+    padding: 6px 8px 6px 16px;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  .sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    left: 60%;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+  
+  .openbtn {
+    font-size: 30px;
+    align-items: center;
+    background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
+    border: 0;
+    border-radius: 8px;
+    box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    display: flex;
+    font-family: Phantomsans, sans-serif;
+    justify-content: center;
+    line-height: 1em;
+    max-width: 100%;
+    min-width: 140px;
+    padding: 3px;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.openbtn:active,
+.openbtn:hover {
+  outline: 0;
+}
+
+.openbtn span {
+  background-color: rgb(5, 6, 45);
+  padding: 16px 24px;
+  border-radius: 6px;
+  width: 100%;
+  height: 100%;
+  transition: 300ms;
+}
+
+.openbtn:hover span {
+  background: none;
+}
+
+@media (min-width: 768px) {
+  .openbtn {
+    font-size: 24px;
+    min-width: 196px;
+  }
+}
+  
+  .sidebar a:hover, .dropdown-container a:hover, .dropdown-btn:hover{
+    background-color: var(--black);
+    color: var(--white);
+  }
+  
+  .sidebar a.active, .dropdown-container a.active {
+    background-image:linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
+    color: var(--white);
+  }
+  
+  .dropdown-container {
+    display: none;
+    background-color: #262626;
+    padding-left: 8px;
+  }
+  
+  .fa-caret-down {
+    float: right;
+    padding-right: 8px;
+  }
+  
+  
+  ul {
+    list-style: none;
+  }
+  
+  h1{
+    text-align: center;
+  }
+
