@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  # MySQL database container
+  mysql:
+    image: mysql:8.0
+    container_name: kathai-mysql
+    environment:
+      MYSQL_DATABASE: kathai
+      MYSQL_USER: rigani
+      MYSQL_PASSWORD: Modao
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes' 
+    ports:
+      - "3306:3306"
+    networks:
+      - kathai-network
+    volumes:
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+
+  # Spring Boot application container
+  kathai-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kathai-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    networks:
+      - kathai-network
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/kathai
+      SPRING_DATASOURCE_USERNAME: rigani
+      SPRING_DATASOURCE_PASSWORD: Modao
+
+networks:
+  kathai-network:
+    driver: bridge
