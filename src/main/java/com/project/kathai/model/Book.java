@@ -8,13 +8,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "mytable")
+@Table(name = "2023sep")
 public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Book_Id")
     private int id;
+
+    @Column(name= "ISBN")
+    private String isbn;
 
     @Column(name = "Title")
     private String title;
@@ -41,9 +44,18 @@ public class Book {
         return id;
     }
 
-    public void setBook_Id(Integer id) {
+    public void setId(Integer id) {
     }
 
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    
     public String getTitle() {
         return title;
     }

@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.kathai.model.Book;
 import com.project.kathai.repository.BookRepository;
@@ -21,10 +22,13 @@ public class BookController {
 
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    BookService bookService;
+
     private final Logger LOG = LoggerFactory.getLogger(BookController.class);
 
-    // Get all books
-    @GetMapping("/")
+    @GetMapping("")
     public String getAllBooks(Model model, Book book) {
         LOG.info("Getting All Books");
 
@@ -33,9 +37,18 @@ public class BookController {
         return "bookList";
 
     }
+    
+    @GetMapping("/")
+    public String getAllBooksMapping(Model model, @RequestParam(defaultValue = "0") int pageNo, @RequestParam(defaultValue = "50") int pageSize) {
+        LOG.info("Getting All Books");
+
+        List<Book> books = this.bookService.getPaginatedBooks(pageNo, pageSize);
+        model.addAttribute("bookList", books);
+        return "bookList";
+    }
 
     @GetMapping("/{id}")
-    public String getBookById(Model model, @PathVariable int id) {
+    public String getBookByIdMapping(Model model, @PathVariable int id) {
         LOG.info("Getting Book with ID: {}", id);
 
         // Find the book by ID
@@ -43,16 +56,16 @@ public class BookController {
 
         // Check if the book exists
         if (optionalBook.isPresent()) {
-            // Get the book object
             Book book = optionalBook.get();
-
-            // Add the book to the model
             model.addAttribute("bookDesc", book);
 
-            return "bookDesc"; // Return the view for displaying book details
+            // You can also add the placeholder URL here in case the image is not found.
+            model.addAttribute("placeholderImageUrl", "placeholder-image-url.jpg");
+
+            return "bookDesc";
         } else {
-            // Handle the case where the book with the given ID is not found
             return "bookNotFound"; // Create a "bookNotFound.html" template for this case
         }
     }
+
 }

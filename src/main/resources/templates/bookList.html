@@ -66,6 +66,23 @@
               </tr>
             </tbody>
           </table>
+
+          <div>
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" th:href="?pageNo=1&pageSize=50">First</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" th:href="?pageNo=${pageNo > 0 ? pageNo - 1 : 0}&pageSize=50">Previous</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" th:href="@{/api/books(pageNo=${'pageNo'+1}, pageSize=50)}">Next</a>
+
+                </li>
+            </ul>
+        </div>
+        
+                
         </div>
 
         <div class="item4">
