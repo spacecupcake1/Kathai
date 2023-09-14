@@ -67,21 +67,18 @@
             </tbody>
           </table>
 
-          <div>
-            <ul class="pagination">
-                <li class="page-item">
-                    <a class="page-link" th:href="?pageNo=1&pageSize=50">First</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" th:href="?pageNo=${pageNo > 0 ? pageNo - 1 : 0}&pageSize=50">Previous</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" th:href="@{/api/books(pageNo=${'pageNo'+1}, pageSize=50)}">Next</a>
-
-                </li>
-            </ul>
-        </div>
-        
+          <div class="pagination">
+            <ul>
+            <li><a th:href="@{/books?page=0}">First</a></li>
+          <li><span th:if="${bookList.number > 0}">
+                <a th:href="@{/books?page=${bookList.number - 1}}">Previous</a>
+            </span></li>
+          <li><span th:if="${bookList.number + 1 < bookList.totalPages}">
+                <a th:href="@{/books?page=${bookList.number + 1}}">Next</a>
+            </span></li>
+          <li><a th:href="@{/books?page=${bookList.totalPages - 1}}">Last</a></li>
+          </ul>
+        </div>        
                 
         </div>
 
