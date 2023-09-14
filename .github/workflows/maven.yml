@@ -19,6 +19,12 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    env:
+      DB_PORT: "3306:3306"
+      DB_NAME: "kathai"
+      DB_USER: "rigani"
+      DB_PASSWORD: "Modao"
+
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 17
