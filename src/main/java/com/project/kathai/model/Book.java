@@ -1,5 +1,7 @@
 package com.project.kathai.model;
 
+import java.sql.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,6 +21,27 @@ public class Book {
     @Column(name= "ISBN")
     private String isbn;
 
+    @Column(name = "Bookshelf")
+    private String shelf;
+
+    @Column(name = "Tags")
+    private String tag;
+
+    @Column(name = "Started_Reading_On")
+    private Date start;
+
+    @Column(name = "Ended_Reading_On")
+    private String end;
+
+    @Column(name = "Pages_Read")
+    private String pgread;
+
+    @Column(name = "Have_Finished")
+    private String read;
+
+    @Column(name = "My_Rating")
+    private String rating;
+
     @Column(name = "Title")
     private String title;
 
@@ -28,11 +51,13 @@ public class Book {
     @Column(name = "Page_Count")
     private String page;
 
-    @Column(name = "My_Rating")
-    private String rating;
-
     @Column(name = "Image_URL")
     private String imageUrl;
+
+    /* 
+    @Column(name = "")
+    private String ;
+    */
 
     // Constructors, getters, and setters for Title and Authors
 
@@ -54,7 +79,6 @@ public class Book {
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
-
     
     public String getTitle() {
         return title;
@@ -86,6 +110,54 @@ public class Book {
 
     public void setRating(String my_Rating) {
         this.rating = my_Rating;
+    }
+
+    public String getShelf() {
+        return shelf;
+    }
+
+    public void setShelf(String shelf) {
+        this.shelf = shelf;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public Date getStart() {
+        return start;
+    }
+
+    public void setStart(Date start) {
+        this.start = start;
+    }
+
+    public String getEnd() {
+        return end;
+    }
+
+    public void setEnd(String end) {
+        this.end = end;
+    }
+
+    public String getPgread() {
+        return pgread;
+    }
+
+    public void setPgread(String pgread) {
+        this.pgread = pgread;
+    }
+
+    public String getRead() {
+        return read;
+    }
+
+    public void setRead(String read) {
+        this.read = read;
     }
 
     public String getImageUrl() {

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <link
+      href="../static/css/main.css"
+      type="text/css"
+      th:href="@{/css/main.css}"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <script
+      href="../static/js/index.js"
+      type="text/javascript"
+      th:src="@{/js/index.js}"
+    ></script>
+    <title>Kathai</title>
+  </head>
+  
+  <body>
+    <div class="item1">
+      <img
+        src="../static/images/f3.png"
+        th:src="@{/images/f3.png}"
+        alt="Title"
+      />
+    </div>
+
+    <div class="item2">
+      <button class="openbtn" onclick="openNav()"><span>☰ Menu</span></button>
+      <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">x</a>
+
+        <a href="bookList.html" class="active">Home</a><br />
+
+        <button class="dropdown-btn">
+          Books
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+          <a href="https://spacecupcake1.github.io/Kathai/HTML/modu.html"
+            >Silent Reading</a
+          >
+          <a href="https://spacecupcake1.github.io/Kathai/HTML/alf.html"
+            >A Little Life</a
+          >
+        </div>
+        <br />
+
+        <button class="dropdown-btn">
+          Characters
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+          <a href="https://spacecupcake1.github.io/Kathai/HTML/kaz.html"
+            >Kaz Brekker</a
+          >
+          <a href="https://spacecupcake1.github.io/Kathai/HTML/inej.html"
+            >Inej Ghafa</a
+          >
+        </div>
+        <br />
+        <a href="https://spacecupcake1.github.io/Kathai/HTML/form.html"
+          >Contact Form</a
+        >
+      </div>
+    </div>
+
+    <div class="transbox">
+      <div class="grid-container">
+        <div class="item3">
+          <h1 style="text-align: center">Charts</h1>
+          <canvas id="bookshelfChart" width="100" height="100"></canvas>
+        </div>
+
+        <div class="item4">
+          <!-- <b>footer</b> -->
+        </div>
+      </div>
+    </div>
+
+    <script th:inline="javascript">
+      /*<![CDATA[*/
+        var bookshelfCounts = /*[[${bookshelfCountsJson}]]*/ '{}';
+        bookshelfCounts = JSON.parse(bookshelfCounts);
+        console.log("Parsed Bookshelf Counts: ", bookshelfCounts);
+
+        var bookshelfCtx = document
+    .getElementById("bookshelfChart")
+    .getContext("2d");
+
+  new Chart(bookshelfCtx, {
+    type: "pie",
+    data: {
+      labels: Object.keys(bookshelfCounts),
+      datasets: [
+        {
+          label: "Bookshelf Counts",
+          data: Object.values(bookshelfCounts),
+          backgroundColor: [
+              "rgba(255, 99, 132, 0.6)",
+              "rgba(54, 162, 235, 0.6)",
+              "rgba(255, 206, 86, 0.6)",
+              "rgba(75, 192, 192, 0.6)",
+              "rgba(153, 102, 255, 0.6)",
+              "rgba(255, 159, 64, 0.2)",
+              "rgba(255, 99, 132, 0.4)",
+              "rgba(54, 162, 235, 0.4)",
+              "rgba(255, 206, 86, 0.4)",
+              "rgba(75, 192, 192, 0.4)",
+              "rgba(153, 102, 255, 0.4)",
+              "rgba(255, 159, 64, 0.4)",
+              "rgba(255, 99, 132, 0.6)",
+              "rgba(54, 162, 235, 0.6)",
+              "rgba(255, 206, 86, 0.6)",
+              "rgba(75, 192, 192, 0.6)",
+              "rgba(153, 102, 255, 0.6)",
+              "rgba(255, 99, 71, 0.8)",
+              "rgba(54, 162, 235, 0.8)"
+          ],
+          borderColor: [
+              "rgba(255, 99, 132, 1)",
+              "rgba(54, 162, 235, 1)",
+              "rgba(255, 206, 86, 1)",
+              "rgba(75, 192, 192, 1)",
+              "rgba(153, 102, 255, 1)",
+              "rgba(255, 159, 64, 1)",
+              "rgba(255, 99, 132, 1.2)",
+              "rgba(54, 162, 235, 1.2)",
+              "rgba(255, 206, 86, 1.2)",
+              "rgba(75, 192, 192, 1.2)",
+              "rgba(153, 102, 255, 1.2)",
+              "rgba(255, 159, 64, 1.2)",
+              "rgba(255, 99, 132, 1.4)",
+              "rgba(54, 162, 235, 1.4)",
+              "rgba(255, 206, 86, 1.4)",
+              "rgba(75, 192, 192, 1.4)",
+              "rgba(153, 102, 255, 1.4)"
+          ],
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      title: {
+        display: true,
+        text: "Bookshelf Analysis",
+        fontSize: 20,
+      },
+      legend: {
+        display: true,
+        position: "bottom",
+        labels: {
+          fontColor: "rgb(0, 0, 0)",
+        },
+      },
+      responsive: true,
+    },
+  });
+      /*]]>*/
+    </script>
+    
+  </body>
+</html>

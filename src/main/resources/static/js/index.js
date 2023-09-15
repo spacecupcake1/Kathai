@@ -1,3 +1,5 @@
+document.addEventListener('DOMContentLoaded', function () {
+
 function openNav() {
   document.getElementById("mySidebar").style.width = "250px";
   document.getElementById("main").style.marginLeft = "250px";
@@ -46,14 +48,8 @@ function fetchBookCoverByISBN(isbn) {
       console.error('Error fetching book cover:', error);
     });
 }
-
-
-document.addEventListener('DOMContentLoaded', function () {
-  // Get the ISBN of the book
-  const isbn = document.getElementById('isbnSpan');
-
-  // Call the function with the ISBN
+  // Assuming that isbnSpan is an existing element
+  var isbn = document.getElementById('isbnSpan');
   fetchBookCoverByISBN(isbn.textContent);
+
 });
-
-
