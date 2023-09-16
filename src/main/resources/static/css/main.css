@@ -230,6 +230,17 @@ h1 {
   text-align: center;
 }
 
+.pie-chart {
+  width: 70% !important; /* Use !important to ensure it overrides other styles */
+  height: 70% !important;
+}
+
+.bar-chart {
+  width: 90% !important; /* Use !important to ensure it overrides other styles */
+  height: 90% !important;
+}
+
+
 /* .pagination {
   display: inline-block;
 }
