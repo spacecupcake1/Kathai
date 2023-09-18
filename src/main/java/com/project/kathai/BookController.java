@@ -83,9 +83,13 @@ public class BookController {
     @GetMapping("/read")
    public String getReadAnalysis(Model model) {
         Map<String, Integer> readCounts = bookService.getReadCounts();
+        Map<String, Integer> pageCounts = bookService.getPageCounts();
 
-         model.addAttribute("readCounts", readCounts);
+        model.addAttribute("readCounts", readCounts);
         LOG.info("Getting the Read Count: {}", readCounts);
+
+        model.addAttribute("pageCounts", pageCounts);
+        LOG.info("Getting the page Count: {}", pageCounts);
 
         return "ReadAnalysis";
     }

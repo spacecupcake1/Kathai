@@ -50,12 +50,19 @@
     <div class="transbox">
       <div class="grid-container">
         <div class="item3">
-          <h1 style="text-align: center">Genre Analysis</h1>
+          <h1 style="text-align: center; font-size: 45px">Genre Analysis</h1>
           <div style="text-align: center">
+            <br />
+            <p style="color: gray; text-align: middle; font-size: 30px">
+              <u>Pie Chart</u>
+            </p>
             <canvas id="genrePieChart" class="pie-chart"></canvas>
             <br />
             <br />
             <br />
+            <p style="color: gray; text-align: middle; font-size: 30px">
+              <u>Bar Chart with percentage</u>
+            </p>
             <canvas id="genreBarChart" class="bar-chart"></canvas>
           </div>
         </div>
@@ -72,12 +79,8 @@
       genreCounts = JSON.parse(genreCounts);
       console.log("Parsed Genre Counts: ", genreCounts);
 
-      var pieCtx = document
-        .getElementById("genrePieChart")
-        .getContext("2d");
-      var barCtx = document
-        .getElementById("genreBarChart")
-        .getContext("2d");
+      var pieCtx = document.getElementById("genrePieChart").getContext("2d");
+      var barCtx = document.getElementById("genreBarChart").getContext("2d");
 
       // Pie Chart
       new Chart(pieCtx, {
@@ -136,7 +139,7 @@
         },
         options: {
           title: {
-            display: true,
+            display: false,
             text: "Pie Chart",
             fontSize: 30,
           },
@@ -145,7 +148,33 @@
             position: "right",
             labels: {
               fontColor: "rgb(0, 0, 0)",
-              fontSize: 15,
+              fontSize: 17,
+              usePointStyle: {
+                fontSize: 30,
+              } ,
+              generateLabels: function (chart) {
+                var data = chart.data;
+                if (data.labels.length && data.datasets.length) {
+                  return data.labels.map(function (label, i) {
+                    var meta = chart.getDatasetMeta(0);
+                    var ds = data.datasets[0];
+                    var arc = meta.data[i];
+                    var value = ds.data[i];
+                    var percentage = (
+                      (value / ds.data.reduce((a, b) => a + b, 0)) *
+                      100
+                    ).toFixed(2);
+                    return {
+                      // text: label + ": " + value + " (" + percentage + "%)",
+                      text: label + ": " + " (" + percentage + "%)",
+                      hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                      index: i,
+                      fillStyle: ds.backgroundColor[i],
+                    };
+                  });
+                }
+                return [];
+              },
             },
           },
           responsive: true,
@@ -216,8 +245,6 @@
         options: {
           title: {
             display: true,
-            text: "Bar Chart with Percentage",
-            fontSize: 30,
           },
           legend: {
             display: false,
@@ -268,7 +295,6 @@
         });
 
         console.log(dropdown);
-
       }
       /*]]>*/
     </script>

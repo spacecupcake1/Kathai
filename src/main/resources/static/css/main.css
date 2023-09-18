@@ -201,8 +201,8 @@ a {
 .sidebar a:hover,
 .dropdown-container a:hover,
 .dropdown-btn:hover {
-  background-color: var(--black);
-  color: var(--white);
+  background-color: var(--white);
+  color: var(--black);
 }
 
 .sidebar a.active,
@@ -215,6 +215,7 @@ a {
   display: none;
   background-color: #262626;
   padding-left: 8px;
+  width: 100%;
 }
 
 .fa-caret-down {
@@ -228,12 +229,14 @@ ul {
 
 h1 {
   text-align: center;
+  font-size: 45px;
 }
 
 .pie-chart {
-  width: 70% !important; /* Use !important to ensure it overrides other styles */
-  height: 70% !important;
+  width: 80% !important; /* Use !important to ensure it overrides other styles */
+  height: 80% !important;
 }
+
 
 .bar-chart {
   width: 90% !important; /* Use !important to ensure it overrides other styles */
