@@ -10,6 +10,8 @@ import com.project.kathai.model.Book;
 public interface BookRepository extends JpaRepository<Book, Integer> {
 
     @Query("SELECT b.shelf AS bookshelf, COUNT(b.shelf) AS count FROM Book b GROUP BY b.shelf")
-    List<Object[]> countBookshelfOccurrences();    
+    List<Object[]> countGenreOccurrences();
+
+    int countByReadEquals(String read);
 
 }

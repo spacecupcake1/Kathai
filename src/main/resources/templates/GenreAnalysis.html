@@ -12,11 +12,6 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
-    <script
-      href="../static/js/index.js"
-      type="text/javascript"
-      th:src="@{/js/index.js}"
-    ></script>
     <title>Genre Chart</title>
   </head>
 
@@ -34,7 +29,18 @@
       <div id="mySidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">x</a>
 
-        <a href="bookList.html" class="active">Home</a><br />
+        <a href="/api/books/">Home</a><br />
+
+        <button class="dropdown-btn">
+          Analysis
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+          <a href="/api/books/read">Book Reading</a>
+          <a href="/api/books/genre" class="active">Genre</a>
+        </div>
+
+        <br />
         <a href="https://spacecupcake1.github.io/Kathai/HTML/form.html"
           >Contact Form</a
         >
@@ -44,13 +50,13 @@
     <div class="transbox">
       <div class="grid-container">
         <div class="item3">
-          <h1 style="text-align: center">Book Genre Analysis</h1>
+          <h1 style="text-align: center">Genre Analysis</h1>
           <div style="text-align: center">
-            <canvas id="bookshelfPieChart" class="pie-chart"></canvas>
+            <canvas id="genrePieChart" class="pie-chart"></canvas>
             <br />
             <br />
             <br />
-            <canvas id="bookshelfBarChart" class="bar-chart"></canvas>
+            <canvas id="genreBarChart" class="bar-chart"></canvas>
           </div>
         </div>
 
@@ -62,26 +68,26 @@
 
     <script th:inline="javascript">
       /*<![CDATA[*/
-      var bookshelfCounts = /*[[${bookshelfCountsJson}]]*/ "{}";
-      bookshelfCounts = JSON.parse(bookshelfCounts);
-      console.log("Parsed Bookshelf Counts: ", bookshelfCounts);
+      var genreCounts = /*[[${genreCountsJson}]]*/ "{}";
+      genreCounts = JSON.parse(genreCounts);
+      console.log("Parsed Genre Counts: ", genreCounts);
 
       var pieCtx = document
-        .getElementById("bookshelfPieChart")
+        .getElementById("genrePieChart")
         .getContext("2d");
       var barCtx = document
-        .getElementById("bookshelfBarChart")
+        .getElementById("genreBarChart")
         .getContext("2d");
 
       // Pie Chart
       new Chart(pieCtx, {
         type: "pie",
         data: {
-          labels: Object.keys(bookshelfCounts),
+          labels: Object.keys(genreCounts),
           datasets: [
             {
-              label: "Bookshelf Counts",
-              data: Object.values(bookshelfCounts),
+              label: "Genre Counts",
+              data: Object.values(genreCounts),
               backgroundColor: [
                 "rgba(138, 0, 0, 1)",
                 "rgba(54, 162, 235, 0.6)",
@@ -132,7 +138,7 @@
           title: {
             display: true,
             text: "Pie Chart",
-            fontSize: 40,
+            fontSize: 30,
           },
           legend: {
             display: true,
@@ -150,14 +156,14 @@
       new Chart(barCtx, {
         type: "bar",
         data: {
-          labels: Object.keys(bookshelfCounts),
+          labels: Object.keys(genreCounts),
           datasets: [
             {
               label: "Percentages",
-              data: Object.values(bookshelfCounts).map(function (value) {
+              data: Object.values(genreCounts).map(function (value) {
                 return (
                   (value /
-                    Object.values(bookshelfCounts).reduce((a, b) => a + b, 0)) *
+                    Object.values(genreCounts).reduce((a, b) => a + b, 0)) *
                   100
                 ).toFixed(2);
               }),
@@ -236,6 +242,34 @@
         },
       });
 
+      function openNav() {
+        document.getElementById("mySidebar").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+      }
+
+      function closeNav() {
+        document.getElementById("mySidebar").style.width = "0";
+        document.getElementById("main").style.marginLeft = "0";
+      }
+
+      var dropdown = document.getElementsByClassName("dropdown-btn");
+      var i;
+
+      for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function () {
+          console.log("Button Clicked");
+          this.classList.toggle("active");
+          var dropdownContent = this.nextElementSibling;
+          if (dropdownContent.style.display === "block") {
+            dropdownContent.style.display = "none";
+          } else {
+            dropdownContent.style.display = "block";
+          }
+        });
+
+        console.log(dropdown);
+
+      }
       /*]]>*/
     </script>
   </body>

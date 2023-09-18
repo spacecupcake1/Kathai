@@ -38,20 +38,6 @@ public class BookController {
         return "bookList";
     }
 
-    /*
-     * @GetMapping("")
-     * public String getAllBooksMapping(Model model, @RequestParam(defaultValue =
-     * "0") int page,
-     * 
-     * @RequestParam(defaultValue = "50") int size) {
-     * LOG.info("Getting All Books");
-     * 
-     * Page<Book> books = bookService.getAllBooksPaged(page, size);
-     * model.addAttribute("bookList", books);
-     * return "bookList";
-     * }
-     */
-
     @GetMapping("/{id}")
     public String getBookByIdMapping(Model model, @PathVariable int id) {
         LOG.info("Getting Book with ID: {}", id);
@@ -74,23 +60,34 @@ public class BookController {
     }
  
 
-    @GetMapping("/shelf")
-    public String getBookshelfAnalysis(Model model) {
-        Map<String, Long> bookshelfCounts = bookService.getBookshelfCounts();
+    @GetMapping("/genre")
+    public String getGenreAnalysis(Model model) {
+        Map<String, Long> genreCounts = bookService.getGenreCounts();
     
         // Convert bookshelfCounts to JSON string
         ObjectMapper objectMapper = new ObjectMapper();
-        String bookshelfCountsJson;
+        String genreCountsJson;
         try {
-            bookshelfCountsJson = objectMapper.writeValueAsString(bookshelfCounts);
+            genreCountsJson = objectMapper.writeValueAsString(genreCounts);
         } catch (Exception e) {
             LOG.error("Error converting bookshelfCounts to JSON: {}", e.getMessage());
             return "errorPage"; // Handle error appropriately
         }
     
-        model.addAttribute("bookshelfCountsJson", bookshelfCountsJson);
-        LOG.info("Getting Book with ID: {}", bookshelfCountsJson);
-        return "bookCharts";
+        model.addAttribute("genreCountsJson", genreCountsJson);
+        LOG.info("Getting the Genre Count: {}", genreCountsJson);
+        return "GenreAnalysis";
+    }
+
+
+    @GetMapping("/read")
+   public String getReadAnalysis(Model model) {
+        Map<String, Integer> readCounts = bookService.getReadCounts();
+
+         model.addAttribute("readCounts", readCounts);
+        LOG.info("Getting the Read Count: {}", readCounts);
+
+        return "ReadAnalysis";
     }
     
 

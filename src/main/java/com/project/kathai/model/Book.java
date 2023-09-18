@@ -30,16 +30,16 @@ public class Book {
     @Column(name = "Started_Reading_On")
     private Date start;
 
-    @Column(name = "Ended_Reading_On")
+    @Column(name = "ended_reading_on")
     private String end;
 
-    @Column(name = "Pages_Read")
+    @Column(name = "pages_read")
     private String pgread;
 
-    @Column(name = "Have_Finished")
+    @Column(name = "have_finished")
     private String read;
 
-    @Column(name = "My_Rating")
+    @Column(name = "my_rating")
     private String rating;
 
     @Column(name = "Title")

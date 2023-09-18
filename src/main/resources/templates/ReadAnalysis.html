@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <link
+      href="../static/css/main.css"
+      type="text/css"
+      th:href="@{/css/main.css}"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <title>Book Reading Chart</title>
+  </head>
+
+  <body>
+    <div class="item1">
+      <img
+        src="../static/images/f3.png"
+        th:src="@{/images/f3.png}"
+        alt="Title"
+      />
+    </div>
+
+    <div class="item2">
+      <button class="openbtn" onclick="openNav()"><span>☰ Menu</span></button>
+      <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">x</a>
+
+        <a href="/api/books/">Home</a><br />
+
+        <button class="dropdown-btn">
+          Analysis
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+          <a href="/api/books/read"  class="active">Book Reading</a>
+          <a href="/api/books/genre">Genre</a>
+        </div>
+
+        <br />
+        <a href="https://spacecupcake1.github.io/Kathai/HTML/form.html"
+          >Contact Form</a
+        >
+      </div>
+    </div>
+
+    <div class="transbox">
+      <div class="grid-container">
+        <div class="item3">
+          <h1 style="text-align: center">Book Reading Analysis</h1>
+          <div style="text-align: center">
+            <br />
+            <canvas id="readPieChart" class="pie-chart"></canvas>
+          </div>
+        </div>
+
+        <div class="item4">
+          <!-- <b>footer</b> -->
+        </div>
+      </div>
+    </div>
+
+    <script th:inline="javascript">
+      /*<![CDATA[*/
+      var readCounts = /*[[${readCounts}]]*/ "{}";
+      console.log("Parsed Genre Counts: ", readCounts);
+
+      const ctx = document.getElementById("readPieChart").getContext("2d");
+
+      new Chart(ctx, {
+        type: "pie",
+        data: {
+          labels: Object.keys(readCounts),
+          datasets: [
+            {
+              data: Object.values(readCounts),
+              backgroundColor: ["green", "red"],
+              borderColor: ["black", "black"],
+              borderWidth: 3,
+            },
+          ],
+        },
+        options: {
+          title: {
+            display: true,
+            text: "Reading Analysis",
+            fontSize: 30,
+          },
+          legend: {
+            display: true,
+            position: "right",
+            labels: {
+              fontColor: "rgb(0, 0, 0)",
+              fontSize: 30,
+            },
+          },
+          responsive: true,
+        },
+      });
+
+      function openNav() {
+        document.getElementById("mySidebar").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+      }
+
+      function closeNav() {
+        document.getElementById("mySidebar").style.width = "0";
+        document.getElementById("main").style.marginLeft = "0";
+      }
+
+      var dropdown = document.getElementsByClassName("dropdown-btn");
+      var i;
+
+      for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function () {
+          console.log("Button Clicked");
+          this.classList.toggle("active");
+          var dropdownContent = this.nextElementSibling;
+          if (dropdownContent.style.display === "block") {
+            dropdownContent.style.display = "none";
+          } else {
+            dropdownContent.style.display = "block";
+          }
+        });
+
+        console.log(dropdown);
+      }
+      /*]]>*/
+    </script>
+  </body>
+</html>
