@@ -12,6 +12,9 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     @Query("SELECT b.shelf AS bookshelf, COUNT(b.shelf) AS count FROM Book b GROUP BY b.shelf")
     List<Object[]> countGenreOccurrences();
 
+    @Query("SELECT b.rating AS rating, COUNT(b.rating) AS count FROM Book b GROUP BY b.rating")
+    List<Object[]> countRatingOccurrences();
+
     int countByReadEquals(String read);
 
 }

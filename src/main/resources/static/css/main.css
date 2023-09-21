@@ -68,20 +68,21 @@ img.thumb:hover {
   padding: 2px;
 }
 
-/* .grid-container > div {
-    border: 15px solid rgba(0, 0, 0, 0.8);
-    padding: 5px 0;
-  }  */
+.grid-container > div {
+  border: 15px solid rgba(0, 0, 0, 0.8);
+  padding: 5px 0;
+}
 
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
+  border: 2px solid black;
 }
 
 td,
 th {
-  border: 1px solid #000000;
+  border: 2px solid black;
   text-align: left;
   padding: 8px;
 }
@@ -237,12 +238,10 @@ h1 {
   height: 80% !important;
 }
 
-
 .bar-chart {
   width: 90% !important; /* Use !important to ensure it overrides other styles */
   height: 90% !important;
 }
-
 
 /* .pagination {
   display: inline-block;

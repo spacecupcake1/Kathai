@@ -93,6 +93,25 @@ public class BookController {
 
         return "ReadAnalysis";
     }
+
+     @GetMapping("/rating")
+    public String getRatingAnalysis(Model model) {
+        Map<String, Long> ratingCounts = bookService.getRatingCounts();
+    
+        // Convert bookshelfCounts to JSON string
+        ObjectMapper objectMapper = new ObjectMapper();
+        String ratingCountsJson;
+        try {
+            ratingCountsJson = objectMapper.writeValueAsString(ratingCounts);
+        } catch (Exception e) {
+            LOG.error("Error converting ratingCounts to JSON: {}", e.getMessage());
+            return "errorPage"; // Handle error appropriately
+        }
+    
+        model.addAttribute("ratingCountsJson", ratingCountsJson);
+        LOG.info("Getting the Rating Count: {}", ratingCountsJson);
+        return "RatingAnalysis";
+    }
     
 
 }

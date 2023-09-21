@@ -70,4 +70,22 @@ public class BookService {
         return pageCounts;
     }
 
+    public Map<String, Long> getRatingCounts() {
+        List<Object[]> ratingOccurrences = bookRepository.countRatingOccurrences();
+        Map<String, Long> ratingCounts = new HashMap<>();
+    
+        for (Object[] ratingOcc : ratingOccurrences) {
+            String rating = (String) ratingOcc[0];
+            Long count = (Long) ratingOcc[1];
+    
+            if (rating == null) {
+                rating = "Not Rated";
+            }
+    
+            ratingCounts.put(rating, count);
+        }
+    
+        return ratingCounts;
+    }
+
 }
