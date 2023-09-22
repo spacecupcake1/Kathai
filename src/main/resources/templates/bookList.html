@@ -28,6 +28,11 @@
         background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
       }
 
+      .pagination a.active {
+        background-image: linear-gradient(144deg, #f34242, #efd10c 50%, #18eb00);
+        color: white;
+      }
+
       .middle {
         text-align: center;
       }
@@ -57,6 +62,7 @@
         <div class="dropdown-container">
           <a href="/api/books/read">Book Reading</a>
           <a href="/api/books/genre">Genre</a>
+          <a href="/api/books/rating">Rating</a>
         </div>
 
         <br />
@@ -93,14 +99,20 @@
 
           <div th:if="${totalPages > 1}" class="middle">
             <ul class="pagination">
-               <li th:if="${currentPage > 0}">
+               <li th:if="${currentPage > 1}">
                     <a th:href="@{/api/books(page=0, size=${pageSize})}">First</a>
                 </li> 
-              <li th:if="${currentPage > 0}">
+              <li th:if="${currentPage > 1}">
                 <a
                   th:href="@{/api/books(page=${previousPage}, size=${pageSize})}"
                   ><b>Previous</b></a
                 >
+              </li>
+              <li th:each="pageNumber : ${#numbers.sequence(
+                (currentPage - 4 < 0) ? 0 : currentPage - 4,
+                (currentPage + 3 > totalPages - 1) ? totalPages - 1 : currentPage + 3)}">
+                  <a th:href="@{/api/books(page=${pageNumber}, size=${pageSize})}"
+                  th:class="${pageNumber == currentPage ? 'active' : ''}"><b>[[${pageNumber + 1}]]</b></a>
               </li>
               <li th:if="${currentPage < totalPages - 1}">
                 <a th:href="@{/api/books(page=${nextPage}, size=${pageSize})}"
@@ -112,6 +124,8 @@
                 </li>
             </ul>
           </div>
+
+
         </div>
 
         <div class="item4">

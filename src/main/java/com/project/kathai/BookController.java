@@ -120,17 +120,22 @@ public class BookController {
             @RequestParam(defaultValue = "50") int size) {
         LOG.info("Getting All Books");
 
+
         Page<Book> booksPage = bookRepository.findAll(PageRequest.of(page, size));
         List<Book> books = booksPage.getContent();
 
         int previousPage = page - 1;
         int nextPage = page + 1;
         int lastPage = booksPage.getTotalPages() - 1;
+        int before = page - 4;
+        int after = page + 4;
 
 
         model.addAttribute("previousPage", previousPage);
         model.addAttribute("nextPage", nextPage);
-         model.addAttribute("lastPage", lastPage);
+        model.addAttribute("lastPage", lastPage);
+        model.addAttribute("before", before);
+        model.addAttribute("after", after);
 
         model.addAttribute("bookList", books);
         model.addAttribute("currentPage", page);
