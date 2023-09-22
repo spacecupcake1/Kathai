@@ -116,7 +116,7 @@ public class BookController {
 
     @GetMapping("")
     public String getAllBooksMapping(Model model,
-            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "50") int size) {
         LOG.info("Getting All Books");
 

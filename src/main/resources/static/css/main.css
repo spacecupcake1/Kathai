@@ -108,7 +108,7 @@ tr:nth-child(even) {
 }
 
 a {
-  color: var(--apricot);
+  color: red;
   text-decoration: none;
 }
 

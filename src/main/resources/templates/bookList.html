@@ -36,6 +36,10 @@
       .middle {
         text-align: center;
       }
+      
+      a{
+        color:#f34242;
+      }
     </style>
     <title>Kathai</title>
   </head>
@@ -53,7 +57,7 @@
       <div id="mySidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">x</a>
 
-        <a href="/api/books/" class="active">Home</a><br />
+        <a href="/api/books" class="active">Home</a><br />
 
         <button class="dropdown-btn">
           Analysis
@@ -89,7 +93,11 @@
             <tbody>
               <tr th:each="book : ${bookList}">
                 <td th:text="${book.id}">Book-Id</td>
-                <td th:text="${book.title}">Title</td>
+                <td>
+                  <a th:href="@{'/api/books/' + ${book.id}}">
+                     <b><span th:text="${book.title}">Title</span></b>
+                  </a>
+                </td>
                 <td th:text="${book.author}">Author</td>
                 <td th:text="${book.page}">Pages</td>
                 <td th:text="${book.rating}">Rating</td>
