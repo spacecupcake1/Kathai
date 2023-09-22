@@ -1,12 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
-    <link
-      href="../static/css/main.css"
-      type="text/css"
-      th:href="@{/css/main.css}"
-      rel="stylesheet"
-    />
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -16,6 +11,27 @@
       type="text/javascript"
       th:src="@{/js/index.js}"
     ></script>
+    <style>
+      .pagination {
+        display: inline-block
+      }
+
+      .pagination li {
+        display: inline;
+        margin-right: 5px;
+      }
+
+      .pagination li a {
+        text-decoration: none;
+        color: white;
+        padding: 8px 16px;
+        background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+      }
+
+      .middle {
+        text-align: center;
+      }
+    </style>
     <title>Kathai</title>
   </head>
   <body>
@@ -53,7 +69,7 @@
     <div class="transbox">
       <div class="grid-container">
         <div class="item3">
-          <h1 style="text-align: center; font-size: 45px;" >Book List</h1>
+          <h1 style="text-align: center; font-size: 45px">Book List</h1>
           <table>
             <thead>
               <tr>
@@ -75,18 +91,27 @@
             </tbody>
           </table>
 
-          <!-- <div class="pagination">
-            <ul>
-            <li><a th:href="@{/books?page=0}">First</a></li>
-          <li><span th:if="${bookList.number > 0}">
-                <a th:href="@{/books?page=${bookList.number - 1}}">Previous</a>
-            </span></li>
-          <li><span th:if="${bookList.number + 1 < bookList.totalPages}">
-                <a th:href="@{/books?page=${bookList.number + 1}}">Next</a>
-            </span></li>
-          <li><a th:href="@{/books?page=${bookList.totalPages - 1}}">Last</a></li>
-          </ul>
-        </div>       -->
+          <div th:if="${totalPages > 1}" class="middle">
+            <ul class="pagination">
+               <li th:if="${currentPage > 0}">
+                    <a th:href="@{/api/books(page=0, size=${pageSize})}">First</a>
+                </li> 
+              <li th:if="${currentPage > 0}">
+                <a
+                  th:href="@{/api/books(page=${previousPage}, size=${pageSize})}"
+                  ><b>Previous</b></a
+                >
+              </li>
+              <li th:if="${currentPage < totalPages - 1}">
+                <a th:href="@{/api/books(page=${nextPage}, size=${pageSize})}"
+                  ><b>Next</b></a
+                >
+              </li>
+              <li th:if="${currentPage < totalPages - 1}">
+                    <a th:href="@{/api/books(page=${lastPage}, size=${pageSize})}"><b>Last</b></a>
+                </li>
+            </ul>
+          </div>
         </div>
 
         <div class="item4">

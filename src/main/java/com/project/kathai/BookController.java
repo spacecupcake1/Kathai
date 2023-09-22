@@ -7,11 +7,14 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.kathai.model.Book;
@@ -58,12 +61,11 @@ public class BookController {
             return "bookNotFound"; // Create a "bookNotFound.html" template for this case
         }
     }
- 
 
     @GetMapping("/genre")
     public String getGenreAnalysis(Model model) {
         Map<String, Long> genreCounts = bookService.getGenreCounts();
-    
+
         // Convert bookshelfCounts to JSON string
         ObjectMapper objectMapper = new ObjectMapper();
         String genreCountsJson;
@@ -73,15 +75,14 @@ public class BookController {
             LOG.error("Error converting bookshelfCounts to JSON: {}", e.getMessage());
             return "errorPage"; // Handle error appropriately
         }
-    
+
         model.addAttribute("genreCountsJson", genreCountsJson);
         LOG.info("Getting the Genre Count: {}", genreCountsJson);
         return "GenreAnalysis";
     }
 
-
     @GetMapping("/read")
-   public String getReadAnalysis(Model model) {
+    public String getReadAnalysis(Model model) {
         Map<String, Integer> readCounts = bookService.getReadCounts();
         Map<String, Integer> pageCounts = bookService.getPageCounts();
 
@@ -94,10 +95,10 @@ public class BookController {
         return "ReadAnalysis";
     }
 
-     @GetMapping("/rating")
+    @GetMapping("/rating")
     public String getRatingAnalysis(Model model) {
         Map<String, Long> ratingCounts = bookService.getRatingCounts();
-    
+
         // Convert bookshelfCounts to JSON string
         ObjectMapper objectMapper = new ObjectMapper();
         String ratingCountsJson;
@@ -107,11 +108,36 @@ public class BookController {
             LOG.error("Error converting ratingCounts to JSON: {}", e.getMessage());
             return "errorPage"; // Handle error appropriately
         }
-    
+
         model.addAttribute("ratingCountsJson", ratingCountsJson);
         LOG.info("Getting the Rating Count: {}", ratingCountsJson);
         return "RatingAnalysis";
     }
-    
+
+    @GetMapping("")
+    public String getAllBooksMapping(Model model,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "50") int size) {
+        LOG.info("Getting All Books");
+
+        Page<Book> booksPage = bookRepository.findAll(PageRequest.of(page, size));
+        List<Book> books = booksPage.getContent();
+
+        int previousPage = page - 1;
+        int nextPage = page + 1;
+        int lastPage = booksPage.getTotalPages() - 1;
+
+
+        model.addAttribute("previousPage", previousPage);
+        model.addAttribute("nextPage", nextPage);
+         model.addAttribute("lastPage", lastPage);
+
+        model.addAttribute("bookList", books);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("pageSize", size);
+        model.addAttribute("totalPages", booksPage.getTotalPages());
+
+        return "bookList";
+    }
 
 }

@@ -242,19 +242,3 @@ h1 {
   width: 90% !important; /* Use !important to ensure it overrides other styles */
   height: 90% !important;
 }
-
-/* .pagination {
-  display: inline-block;
-}
-
-.pagination li {
-  display: inline;
-  margin-right: 5px;
-}
-
-.pagination li a {
-  text-decoration: none;
-  color: rgb(255, 0, 0);
-  padding: 8px 16px;
-  border: 1px solid #000000;
-} */

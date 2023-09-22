@@ -33,15 +33,15 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById("mySidebar").style.width = "250px";
     document.getElementById("main").style.marginLeft = "250px";
   }
-  
+
   function closeNav() {
     document.getElementById("mySidebar").style.width = "0";
     document.getElementById("main").style.marginLeft = "0";
   }
-  
+
   var dropdown = document.getElementsByClassName("dropdown-btn");
   var i;
-  
+
   for (i = 0; i < dropdown.length; i++) {
     dropdown[i].addEventListener("click", function () {
       console.log("Button Clicked");
@@ -53,9 +53,9 @@ document.addEventListener('DOMContentLoaded', function () {
         dropdownContent.style.display = "block";
       }
     });
-    
+
     console.log(dropdown);
-  
+
   }
 
   function fetchBookCoverByISBN(isbn) {

@@ -17,4 +17,6 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     int countByReadEquals(String read);
 
+
+
 }
