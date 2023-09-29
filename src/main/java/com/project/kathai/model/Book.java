@@ -45,11 +45,44 @@ public class Book {
     @Column(name = "Title")
     private String title;
 
+    @Column(name = "Language")
+    private String language;
+
+    @Column(name = "Categories")
+    private String category;
+
     @Column(name = "Authors")
     private String author;
 
+    @Column(name = "Publisher")
+    private String publisher;
+
     @Column(name = "Page_Count")
     private String page;
+
+    @Column(name = "Published_At")
+    private String publishdate;
+
+    @Column(name = "Format")
+    private String format;
+
+    @Column(name = "Series")
+    private String series;
+
+    @Column(name = "Volume")
+    private String volume;
+
+    @Column(name = "Purchase_From")
+    private String shop;
+
+    @Column(name = "Purchase_Price")
+    private String price;
+
+    @Column(name = "Purchase_Date")
+    private String purchasedate;
+
+    @Column(name = "Description")
+    private String plot;
 
     @Column(name = "Image_URL")
     private String imageUrl;
@@ -158,6 +191,94 @@ public class Book {
 
     public void setRead(String read) {
         this.read = read;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public String getPublishdate() {
+        return publishdate;
+    }
+
+    public void setPublishdate(String publishdate) {
+        this.publishdate = publishdate;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
+    }
+
+    public String getSeries() {
+        return series;
+    }
+
+    public void setSeries(String series) {
+        this.series = series;
+    }
+
+    public String getVolume() {
+        return volume;
+    }
+
+    public void setVolume(String volume) {
+        this.volume = volume;
+    }
+
+    public String getShop() {
+        return shop;
+    }
+
+    public void setShop(String shop) {
+        this.shop = shop;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getPurchasedate() {
+        return purchasedate;
+    }
+
+    public void setPurchasedate(String purchasedate) {
+        this.purchasedate = purchasedate;
+    }
+
+    public String getPlot() {
+        return plot;
+    }
+
+    public void setPlot(String plot) {
+        this.plot = plot;
     }
 
     public String getImageUrl() {

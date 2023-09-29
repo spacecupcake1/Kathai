@@ -2,6 +2,8 @@ package com.project.kathai.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -14,6 +16,8 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     @Query("SELECT b.rating AS rating, COUNT(b.rating) AS count FROM Book b GROUP BY b.rating")
     List<Object[]> countRatingOccurrences();
+
+    Page<Book> findAllByOrderByTitleAsc(Pageable pageable);
 
     int countByReadEquals(String read);
 

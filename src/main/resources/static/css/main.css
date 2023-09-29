@@ -100,7 +100,7 @@ tr:nth-child(even) {
 }
 
 .center:hover {
-  transform: scale(1.5);
+  transform: scale(2);
 }
 
 .checked {

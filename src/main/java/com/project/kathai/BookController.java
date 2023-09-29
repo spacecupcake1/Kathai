@@ -121,7 +121,7 @@ public class BookController {
         LOG.info("Getting All Books");
 
 
-        Page<Book> booksPage = bookRepository.findAll(PageRequest.of(page, size));
+        Page<Book> booksPage = bookRepository.findAllByOrderByTitleAsc(PageRequest.of(page, size));
         List<Book> books = booksPage.getContent();
 
         int previousPage = page - 1;
