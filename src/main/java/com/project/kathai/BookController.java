@@ -11,14 +11,20 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.kathai.model.Book;
+import com.project.kathai.model.User;
 import com.project.kathai.repository.BookRepository;
+import com.project.kathai.repository.UserRepository;
 
 @Controller
 @RequestMapping("/api/books")
@@ -28,11 +34,50 @@ public class BookController {
     private BookRepository bookRepository;
 
     @Autowired
+    private UserRepository userRepo;
+
+    @Autowired
     BookService bookService;
 
     private final Logger LOG = LoggerFactory.getLogger(BookController.class);
 
-    @GetMapping("/")
+    @GetMapping("/register")
+    public String showRegistrationForm(Model model) {
+        model.addAttribute("user", new User());
+        return "login";
+    }
+
+    @PostMapping("/register")
+    public String processRegister(@ModelAttribute @Validated User user, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+			LOG.debug("errors on /newPerson: {}", result.getAllErrors());
+			return "login";
+		}
+        LOG.debug("saving {}", user); // to check before saving a person
+		user = this.userRepo.save(user);
+        LOG.debug("saving {}", user); // tocheck after saving a person
+        return "login";
+    }
+
+    @GetMapping("/signin")
+    public String showLoginForm(Model model) {
+        model.addAttribute("user", new User());
+        return "login";
+    }
+
+    @PostMapping("/signin")
+    public String processLogin(@RequestParam String userName, @RequestParam String password, Model model) {
+        User user = userRepo.findByuserName(userName);
+
+        if (user != null && user.getPassword().equals(password)) {
+            return "redirect:/api/books"; // Successful login, redirect to dashboard
+        } else {
+            model.addAttribute("error", "Invalid username or password");
+            return "login"; // Failed login, show error message
+        }
+    }
+
+    @GetMapping("/all")
     public String getAllBooksMapping(Model model, Book book) {
         LOG.info("Getting All Books");
 
@@ -120,7 +165,6 @@ public class BookController {
             @RequestParam(defaultValue = "50") int size) {
         LOG.info("Getting All Books");
 
-
         Page<Book> booksPage = bookRepository.findAllByOrderByTitleAsc(PageRequest.of(page, size));
         List<Book> books = booksPage.getContent();
 
@@ -129,7 +173,6 @@ public class BookController {
         int lastPage = booksPage.getTotalPages() - 1;
         int before = page - 4;
         int after = page + 4;
-
 
         model.addAttribute("previousPage", previousPage);
         model.addAttribute("nextPage", nextPage);
