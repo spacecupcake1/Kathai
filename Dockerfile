@@ -2,7 +2,7 @@
 FROM openjdk:17
 
 # Set environment variables for MySQL connection
-ENV MYSQL_HOST=host.docker.internal 
+ENV MYSQL_HOST=host.docker.internal
 ENV MYSQL_PORT=3306
 ENV MYSQL_DB=kathai
 ENV MYSQL_USER=rigani
