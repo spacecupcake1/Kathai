@@ -15,7 +15,7 @@ RUN mkdir /myapp
 WORKDIR /myapp
 
 # Copy your Spring Boot application JAR file into the container
-COPY target/*.jar /myapp/app.jar
+COPY --from=build /target/*.jar /myapp/app.jar
 
 # Expose the port your application will run on
 EXPOSE 8080
