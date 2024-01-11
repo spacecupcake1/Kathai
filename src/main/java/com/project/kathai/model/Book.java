@@ -10,7 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "2023sep")
+@Table(name = "2024jan")
 public class Book {
 
     @Id
