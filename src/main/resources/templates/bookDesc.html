@@ -31,7 +31,7 @@
         li span {
             margin: 0;
             font-family: 'Courier New', monospace;
-            font-size: 15px;
+            font-size: 17px;
         }
 
        /* Define the style for the stars */
@@ -90,13 +90,8 @@
             </h1>
             <br>
             <img id="bookCover" src="" alt="Book Cover" class="thumb">
-            <ul>
-              <li>
-              <h3>ID: </h3>
-              <span th:text="*{id}"></span>
-              </li>
-              <br>
 
+            <ul>
               <li>
               <h3>ISBN: </h3>
               <span th:text="*{isbn}" id="isbnSpan"></span>
@@ -128,7 +123,13 @@
               <br>
 
               <li>
-              <h3>Languange: </h3>
+                <h3>Category: </h3>
+                <span th:text="*{category}"></span>
+                </li>
+                <br>
+
+              <li>
+              <h3>Languange:  </h3>
               <span th:text="*{language}"></span>
               </li>
               <br>

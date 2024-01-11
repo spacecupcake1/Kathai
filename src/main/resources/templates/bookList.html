@@ -83,22 +83,22 @@
           <table>
             <thead>
               <tr>
-                <th>Id</th>
-                <th>Book</th>
+                <th>Book Name</th>
                 <th>Author</th>
+                <th>Genre</th>
                 <th>Pages</th>
                 <th>Rating</th>
               </tr>
             </thead>
             <tbody>
               <tr th:each="book : ${bookList}">
-                <td th:text="${book.id}">Book-Id</td>
                 <td>
                   <a th:href="@{'/api/books/' + ${book.id}}">
                      <b><span th:text="${book.title}">Title</span></b>
                   </a>
                 </td>
                 <td th:text="${book.author}">Author</td>
+                <td th:text="${book.shelf}">Author</td>
                 <td th:text="${book.page}">Pages</td>
                 <td th:text="${book.rating}">Rating</td>
               </tr>

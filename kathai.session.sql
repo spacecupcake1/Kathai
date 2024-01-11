@@ -1,1 +1,1 @@
-select * FROM 2024jan;
+select title, Bookshelf, tags, Categories FROM 2024jan limit 15;
