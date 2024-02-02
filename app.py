@@ -102,6 +102,30 @@ def RatingAnalysis():
 
     return render_template('RatingAnalysis.html', result_json=result_json)
 
+@app.route('/books/genre')
+def GenreAnalysis():
+
+    # Aggregation pipeline to group by ratings and count
+    pipeline = [
+        {
+            '$group': {
+                '_id': '$Bookshelf',
+                'count': {'$sum': 1}
+            }
+        }
+    ]
+
+    # Execute the aggregation pipeline
+    result = collection.aggregate(pipeline)
+
+    # Convert the result to a list and print it
+    result_list = list(result)
+
+    result_json = dumps(result_list, default=str) 
+
+    print(result_json)
+
+    return render_template('GenreAnalysis.html', result_json=result_json)
 
 
 if __name__ == '__main__':
