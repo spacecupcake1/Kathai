@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from pymongo import MongoClient
-from typing import Dict
+from bson.json_util import dumps
+import  json
 
 app = Flask(__name__)
 
@@ -18,7 +19,9 @@ def index():
     # Render the HTML template with the documents
     return render_template('index.html', documents=documents)
 
-@app.route('/book/<int:id>')
+
+
+@app.route('/books/<int:id>')
 def book_desc(id):
     print(f"Received book_id: {id}")
 
@@ -36,7 +39,9 @@ def book_desc(id):
         print("Book not found")
         return render_template('book_not_found.html')
     
-@app.route('/count')
+    
+    
+@app.route('/books/read')
 def ReadAnalysis():
 
      # Count by Read
@@ -65,9 +70,37 @@ def ReadAnalysis():
     readCounts = {"Read": read_count, "Not Read": not_read_count}
     pageCounts = {"read": aggregation_result['pages_read'], "unread": pages_unread}
 
-    print(f"Book found: {result}")
     return render_template('ReadAnalysis.html', readCounts=readCounts, pageCounts=pageCounts)
 
+
+
+@app.route('/books/rating')
+def RatingAnalysis():
+
+    # Aggregation pipeline to group by ratings and count
+    pipeline = [
+        {
+            '$match': {
+                'Rating': {'$ne': None}  # Exclude documents where Rating is null
+            }
+        },
+        {
+            '$group': {
+                '_id': '$Rating',
+                'count': {'$sum': 1}
+            }
+        }
+    ]
+
+    # Execute the aggregation pipeline
+    result = collection.aggregate(pipeline)
+
+    # Convert the result to a list and print it
+    result_list = list(result)
+
+    result_json = dumps(result_list, default=str) 
+
+    return render_template('RatingAnalysis.html', result_json=result_json)
 
 
 
