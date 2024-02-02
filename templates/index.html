@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+    <style>
+      .pagination {
+        display: inline-block
+      }
+
+      .pagination li {
+        display: inline;
+        margin-right: 5px;
+      }
+
+      .pagination li a {
+        text-decoration: none;
+        color: white;
+        padding: 8px 16px;
+        background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+      }
+
+      .pagination a.active {
+        background-image: linear-gradient(144deg, #f34242, #efd10c 50%, #18eb00);
+        color: white;
+      }
+
+      .middle {
+        text-align: center;
+      }
+      
+      a{
+        color:#f34242;
+      }
+    </style>
+    <title>Kathai</title>
+  </head>
+  <body>
+    <div class="item1">
+      <img
+        src="../static/images/f3.png"
+        th:src="@{/images/f3.png}"
+        alt="Title"
+      />
+    </div>
+
+    <div class="item2"> 
+      <button class="openbtn" onclick="openNav()"><span>☰ Menu</span></button>
+      <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">x</a>
+
+        <a href="/api/books" class="active">Home</a><br />
+
+        <button class="dropdown-btn">
+          Analysis
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+          <a href="/api/books/read">Book Reading</a>
+          <a href="/api/books/genre">Genre</a>
+          <a href="/api/books/rating">Rating</a>
+        </div>
+
+        <br />
+        <a href="https://spacecupcake1.github.io/Kathai/HTML/form.html"
+          >Contact Form</a
+        >
+      </div>
+    </div>
+
+    <div class="transbox">
+      <div class="grid-container">
+        <div class="item3">
+          <h1 style="text-align: center; font-size: 45px">Book List</h1>
+          <table>
+            <thead>
+              <tr>
+                <th>Book Name</th>
+                <th>Author</th>
+                <th>Genre</th>
+                <th>Pages</th>
+                <th>Rating</th>
+              </tr>
+            </thead>
+            <tbody>
+
+            {% for document in documents %}
+              <tr>
+                <td>
+                  <a href="{{ url_for('book_desc', id=document.Id) }}">
+                    <b>{{ document.Title }}</b>
+                  </a>
+                </td>
+                <td>{{ document.Authors }}</td>
+                <td>{{ document.Bookshelf }}</td>
+                <td>{{ document.Pages }}</td>
+                <td>{{ document.Rating }}</td>
+              </tr>
+              {% endfor %}
+
+            </tbody>
+          </table>
+
+
+        </div>
+
+        <!-- <div class="item4">
+          <b>footer</b>
+        </div> -->
+      </div>
+    </div>
+  </body>
+</html>

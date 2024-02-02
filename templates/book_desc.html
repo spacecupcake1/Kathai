@@ -1,0 +1,143 @@
+<<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+    <style>
+        ul {
+          list-style-type: none;
+          padding: 0;
+        }
+
+        li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 5px; /* Adjust as needed */
+        }
+
+        h3 {
+            margin: 0;
+            min-width: 100px; /* Adjust as needed */
+        }
+
+        li span {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 17px;
+        }
+
+  </style>
+  </head>
+  <body>
+    <div class="item1">
+      <img src="../static/images/f3.png" th:src="@{/images/f3.png}" alt="Title" />
+    </div>
+
+    <div class="item2">
+      <button class="openbtn" onclick="openNav()"><span>☰ Menu</span></button>
+      <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">x</a>
+
+        <a href="/">Home</a><br />
+
+        <button class="dropdown-btn">
+          Analysis
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+          <a href="/api/books/read">Book Reading</a>
+          <a href="/api/books/genre">Genre</a>
+          <a href="/api/books/rating">Rating</a>
+        </div>
+
+        <br />
+        <a href="https://spacecupcake1.github.io/Kathai/HTML/form.html"
+          >Contact Form</a
+        >
+      </div>
+    </div>
+
+    <div class="transbox">
+      <div class="grid-container">
+
+        <div class="item3">
+        <div style="text-align: center;">
+            <h1 style="text-align: center; font-size: 40px; font-family: 'Special Elite', cursive;" >
+                {{ document.Title }}
+            </h1>
+            <br>
+            <img id="bookCover" src="" alt="Book Cover" class="thumb">
+
+            <ul>
+              <li>
+              <h3>ISBN: </h3>
+              <span id="isbnSpan">{{ document.ISBN }}</span>
+              </li>
+              <br>
+
+              <li>
+              <h3>Author: </h3>
+              <span id="authorSpan">{{ document.Authors }}</span>
+              </li>
+              <br>
+
+              <li>
+              <h3>Pages: </h3>
+              <span>{{ document.Pages }}</span>
+              </li>
+              <br>
+
+              <li>
+              <h3>Series: </h3>
+              <span>{{ document.Series }}</span>
+              </li>
+              <br>
+
+              <li>
+              <h3>Volume: </h3>
+              <span>{{ document.Volume }}</span>
+              </li>
+              <br>
+
+              <li>
+                <h3>Category: </h3>
+                <span>{{ document.Categories }}</span>
+                </li>
+                <br>
+
+              <li>
+              <h3>Languange:  </h3>
+              <span>{{ document.Language }}</span>
+              </li>
+              <br>
+
+              <li>
+                <h3>Description: </h3>
+                <span>{{ document.Description }}</span>
+              </li>
+              <br>
+
+              <li>
+                <h3>Rating: </h3>
+                <span class="rating-stars">{{ document.Rating }}</span>
+              </li>
+
+            </ul>
+
+			</div>
+		
+		</div>
+
+        </div>
+
+        <!-- <div class="item4">
+          <b>footer</b>
+        </div> -->
+      </div>
+    </div>
+  </body>
+</html>
