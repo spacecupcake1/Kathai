@@ -441,7 +441,7 @@
             <h2>Welcome</h2>
             <br>
             <br>
-            <form id="signin-form" method="POST" action="{{ url_for('signin') }}">
+            <form id="signin-form" method="POST" action="{{ url_for('login') }}">
                 <input type="hidden" name="action" value="signin">
                 <div class="label-container">
                     <input type="text" name="userName" required minlength="2" maxlength="20" id="sid"/>
@@ -531,12 +531,12 @@
 
          if (signinForm.style.display !== 'none') {
              signinForm.style.display = 'none';
-             signinForm.action = '/signin'; // Set action for sign in
+             signinForm.action = '/login'; // Set action for sign in
              signupForm.style.display = 'block';
              signupForm.action = '/register'; // Set action for sign up
          } else {
              signinForm.style.display = 'block';
-             signinForm.action = '/signin'; // Set action for sign in
+             signinForm.action = '/login'; // Set action for sign in
              signupForm.style.display = 'none';
          }
      });

@@ -43,7 +43,7 @@ def book_desc(id):
         return render_template('book_desc.html', document=document)
     else:
         print("Book not found")
-        return render_template('book_not_found.html')
+        return render_template('error.html')
     
     
     
@@ -133,13 +133,13 @@ def GenreAnalysis():
 
     return render_template('GenreAnalysis.html', result_json=result_json)
 
-@app.route('/signin')
+@app.route('/login')
 def show_login_form():
     user = {}  # Assuming you want to pass an empty user dictionary to the template
     return render_template('login.html', user=user)
 
-@app.route('/signin', methods=['POST'])
-def signin():
+@app.route('/login', methods=['POST'])
+def login():
     if request.method == 'POST':
         user_name = request.form.get('userName')
         password = request.form.get('password')
@@ -181,7 +181,7 @@ def register():
         })
 
         flash('Registration successful! Please log in.', 'success')
-        return redirect(url_for('signin'))
+        return redirect(url_for('login'))
 
 
 if __name__ == '__main__':
