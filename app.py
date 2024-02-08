@@ -1,9 +1,15 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for, flash
 from pymongo import MongoClient
 from bson.json_util import dumps
-import  json
+from flask_pymongo import PyMongo
 
 app = Flask(__name__)
+
+# Set a secret key for session management
+app.config['MONGO_URI'] = 'mongodb://rigani:Modao@localhost:27017/kathai'
+app.secret_key = 'Sizhui'
+
+mongo = PyMongo(app)
 
 # Connect to MongoDB
 client = MongoClient('mongodb://rigani:Modao@localhost:27017/kathai')
@@ -126,6 +132,56 @@ def GenreAnalysis():
     print(result_json)
 
     return render_template('GenreAnalysis.html', result_json=result_json)
+
+@app.route('/signin')
+def show_login_form():
+    user = {}  # Assuming you want to pass an empty user dictionary to the template
+    return render_template('login.html', user=user)
+
+@app.route('/signin', methods=['POST'])
+def signin():
+    if request.method == 'POST':
+        user_name = request.form.get('userName')
+        password = request.form.get('password')
+        
+        # Implement authentication logic with MongoDB here
+        # For simplicity, let's assume you have a 'users' collection in MongoDB
+        
+        user = mongo.db.users.find_one({'userName': user_name, 'password': password})
+        
+        if user:
+            flash('Login successful!', 'success')
+            return redirect(url_for('index'))
+        else:
+            flash('Invalid username or password', 'error')
+            return render_template('error.html')
+
+@app.route('/register', methods=['POST'])
+def register():
+    if request.method == 'POST':
+        # Get user input from the registration form
+        first_name = request.form.get('firstName')
+        last_name = request.form.get('lastName')
+        user_name = request.form.get('userName')
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        # Check if the username is already taken (you might want to do this differently in production)
+        if mongo.db.users.find_one({'userName': user_name}):
+            flash('Username already exists', 'error')
+            return redirect(url_for('index'))
+
+        # Insert the user into the 'users' collection in MongoDB
+        mongo.db.users.insert_one({
+            'firstName': first_name,
+            'lastName': last_name,
+            'userName': user_name,
+            'email': email,
+            'password': password
+        })
+
+        flash('Registration successful! Please log in.', 'success')
+        return redirect(url_for('signin'))
 
 
 if __name__ == '__main__':
