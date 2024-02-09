@@ -7,6 +7,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
     <script src="{{ url_for('static', filename='index.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <style>
       .pagination {
         display: inline-block
@@ -35,6 +36,43 @@
       
       a{
         color:#f34242;
+      }
+
+      th, td{
+        text-align: center;
+      }
+
+      form{
+        text-align: center;
+      }
+
+      .form__field {
+        font-family: inherit;
+        border: 0;
+        border-bottom: 2px solid #858585;
+        outline: 0;
+        font-size: 20px;
+        padding: 7px 0;
+        transition: border-color 0.2s;
+      }
+
+      .form__field::placeholder {
+        color: #b6b6b6;
+      }
+
+      .form__field:focus {
+        padding-bottom: 6px;
+        border-width: 4px;
+        border-image: linear-gradient(to right, #11998e,#38ef7d);
+        border-image-slice: 1;
+      }
+
+      select{
+        border: 2px solid #9b9b9b;
+        font-size: 15px;
+        height: 40px;
+        width: 242px;
+        
       }
       
     </style>
@@ -76,30 +114,29 @@
         <div class="item3">
           <h1 style="text-align: center; font-size: 45px">Book List</h1>
 
-          <form method="get" action="{{ url_for('bookfilter') }}">
-            <label for="title">Title:</label>
-            <input type="text" name="title" value="{{ title_query }}">
+          <form method="get" action="{{ url_for('bookfilter') }}" id="filterForm">
+
+            <!-- <label class="form__label" for="title">Title:</label> -->
+            <input type="text" class="form__field" name="title" placeholder="Filter By Name" value="{{ title_query }}">&nbsp &nbsp &nbsp
             
-            <label for="author">Author:</label>
-            <input type="text" name="author" value="{{ author_query }}">
+            <!-- <label class="form__label" for="author">Author:</label> -->
+            <input type="text" class="form__field" name="author" placeholder="Filter By Author" value="{{ author_query }}">&nbsp &nbsp &nbsp
             
-            <label for="genre">Genre:</label>
-            <select name="genre">
+            <select name="genre" id="genreSelect">
                 <option value="" {% if not genre_query %}selected{% endif %}>All Genres</option>
                 {% for genre in distinct_genres %}
                     <option value="{{ genre }}" {% if genre == genre_query %}selected{% endif %}>{{ genre }}</option>
                 {% endfor %}
-            </select>
+            </select>&nbsp &nbsp &nbsp
         
-            <label for="rating">Rating:</label>
-            <select name="rating">
+            <select name="rating" id="ratingSelect">
                 <option value="" {% if not rating_query %}selected{% endif %}>All Ratings</option>
                 {% for rating in distinct_ratings %}
                     <option value="{{ rating }}" {% if rating == rating_query %}selected{% endif %}>{{ rating }}</option>
                 {% endfor %}
             </select>
+            <p></p>
             
-            <button type="submit">Apply Filters</button>
           </form>
 
 
@@ -145,5 +182,25 @@
         </div> -->
       </div>
     </div>
+
+    <script>
+      $(document).ready(function () {
+          // Add an input event listener to the text inputs
+          $('#filterForm input[type="text"]').on('input', function () {
+              // Trigger the form submission when the user stops typing for 500 milliseconds
+              clearTimeout($(this).data('timer'));
+              $(this).data('timer', setTimeout(function () {
+                $('#filterForm').submit();
+            }, 1000));
+          });
+  
+          // Add a change event listener to the select elements
+          $('#filterForm select').on('change', function () {
+              // Trigger the form submission when the user selects an option
+              $('#filterForm').submit();
+          });
+      });
+  </script>
+
   </body>
 </html>
