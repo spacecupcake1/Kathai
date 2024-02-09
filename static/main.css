@@ -229,8 +229,10 @@
   }
   
   h1 {
+    font-family: Papyrus, fantasy;
     text-align: center;
-    font-size: 45px;
+    font-size: 60px;
+    text-decoration: underline;
   }
   
   .pie-chart {

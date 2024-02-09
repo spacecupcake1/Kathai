@@ -17,7 +17,7 @@ client = MongoClient('mongodb://rigani:Modao@localhost:27017/kathai')
 db = client['kathai']
 collection = db.janu
 
-@app.route('/')
+@app.route('/all')
 def index():
 
     # Check if the user is logged in
@@ -59,7 +59,7 @@ def booklist():
     # Render the HTML template with the paginated documents
     return render_template('booklist.html', documents=documents, pagination=pagination)
 
-@app.route('/books/filter', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def bookfilter():
     # Check if the user is logged in
     if 'user_id' not in session:
