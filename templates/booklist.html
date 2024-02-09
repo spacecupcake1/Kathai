@@ -9,7 +9,8 @@
     <script src="{{ url_for('static', filename='index.js') }}"></script>
     <style>
       .pagination {
-        display: inline-block
+        display: inline-block;
+        text-align: center;
       }
 
       .pagination li {
@@ -53,7 +54,7 @@
       <div id="mySidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">x</a>
 
-        <a href="/" class="active">Home</a><br />
+        <a href="/">Home</a><br />
 
         <button class="dropdown-btn">
           Analysis
@@ -103,6 +104,11 @@
             </tbody>
           </table>
 
+          {% if pagination %}
+            <div class="pagination">
+                {{ pagination.links }}
+            </div>
+         {% endif %}
 
         </div>
 

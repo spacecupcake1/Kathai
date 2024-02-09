@@ -38,9 +38,7 @@
         </div>
 
         <br />
-        <a href="https://spacecupcake1.github.io/Kathai/HTML/form.html"
-          >Contact Form</a
-        >
+        <a href="/logout">Logout</a><br />
       </div>
     </div>
 
@@ -85,10 +83,10 @@
       new Chart(bookctx, {
         type: "pie",
         data: {
-          labels: Object.keys(readCounts),
+          labels: ["Read", "Unread"],
           datasets: [
             {
-              data: Object.values(readCounts),
+              data: [readCounts.read, readCounts.unread],
               backgroundColor: ["green", "red"],
               borderColor: ["black", "black"],
               borderWidth: 3,
@@ -145,7 +143,7 @@
           datasets: [
             {
               data: [pageCounts.read, pageCounts.unread],
-              backgroundColor: ["#FF6384", "#36A2EB"],
+              backgroundColor: ["green", "red"],
               borderColor: ["black", "black"],
               borderWidth: 3,
             },
