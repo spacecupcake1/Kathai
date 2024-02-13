@@ -8,27 +8,6 @@
     />
     <script src="{{ url_for('static', filename='index.js') }}"></script>
     <style>
-      .pagination {
-        display: inline-block
-      }
-
-      .pagination li {
-        display: inline;
-        margin-right: 5px;
-      }
-
-      .pagination li a {
-        text-decoration: none;
-        color: white;
-        padding: 8px 16px;
-        background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
-      }
-
-      .pagination a.active {
-        background-image: linear-gradient(144deg, #f34242, #efd10c 50%, #18eb00);
-        color: white;
-      }
-
       .middle {
         text-align: center;
       }
@@ -68,43 +47,11 @@
 
     <div class="transbox">
       <div class="grid-container">
+
         <div class="item3">
           <h1>Book List</h1>
-          <table>
-            <thead>
-              <tr>
-                <th>Book Name</th>
-                <th>Author</th>
-                <th>Genre</th>
-                <th>Pages</th>
-                <th>Rating</th>
-              </tr>
-            </thead>
-            <tbody>
-
-            {% for document in documents %}
-              <tr>
-                <td>
-                  <a href="{{ url_for('book_desc', id=document.Id) }}">
-                    <b>{{ document.Title }}</b>
-                  </a>
-                </td>
-                <td>{{ document.Authors }}</td>
-                <td>{{ document.Bookshelf }}</td>
-                <td>{{ document.Pages }}</td>
-                <td>{{ document.Rating }}</td>
-              </tr>
-              {% endfor %}
-
-            </tbody>
-          </table>
-
-
         </div>
 
-        <!-- <div class="item4">
-          <b>footer</b>
-        </div> -->
       </div>
     </div>
   </body>
