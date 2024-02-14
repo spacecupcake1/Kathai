@@ -4,6 +4,7 @@ from bson.json_util import dumps
 from flask_pymongo import PyMongo
 from flask_paginate import Pagination, get_page_parameter
 import pymongo
+
 app = Flask(__name__)
 
 # Set a secret key for session management
@@ -288,4 +289,4 @@ def logout():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')

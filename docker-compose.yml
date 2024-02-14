@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /app
+    ports:
+      - "5000:5000"
+    environment:
+      MONGO_URI: "mongodb://rigani:Modao@localhost:27017/kathai"
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: rigani
+      MONGO_INITDB_ROOT_PASSWORD: Modao
+
+
