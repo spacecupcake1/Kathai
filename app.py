@@ -15,7 +15,9 @@ mongo = PyMongo(app)
 # Connect to MongoDB
 client = MongoClient('mongodb://rigani:Modao@localhost:27017/kathai')
 db = client['kathai']
-collection = db.janu
+collection = db.feb
+
+
 
 @app.route('/all')
 def index():
@@ -130,6 +132,9 @@ def ReadAnalysis():
         return redirect(url_for('show_login_form'))
     
      # Count by Read
+    total = collection.count_documents({})
+    print(f"Total Books: {total}")
+
     read_count = collection.count_documents({'Read': 1})
     not_read_count = collection.count_documents({'Read': 0})
 
@@ -155,9 +160,7 @@ def ReadAnalysis():
     readCounts = {"read": read_count, "unread": not_read_count}
     pageCounts = {"read": aggregation_result['pages_read'], "unread": pages_unread}
 
-    return render_template('ReadAnalysis.html', readCounts=readCounts, pageCounts=pageCounts)
-
-
+    return render_template('ReadAnalysis.html', readCounts=readCounts, pageCounts=pageCounts, total=total)
 
 @app.route('/books/rating')
 def RatingAnalysis():
@@ -222,6 +225,8 @@ def GenreAnalysis():
 
     return render_template('GenreAnalysis.html', result_json=result_json)
 
+
+
 @app.route('/login')
 def show_login_form():
     user = {}  # Assuming you want to pass an empty user dictionary to the template
@@ -279,6 +284,8 @@ def logout():
     session.pop('user_id', None)
     flash('Logged out successfully', 'success')
     return redirect(url_for('show_login_form'))
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
