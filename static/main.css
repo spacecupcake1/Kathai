@@ -12,6 +12,13 @@
     background-size: 100% 100%;
     opacity: 0.8;
   }
+
+  h1 {
+    font-family: Papyrus, fantasy;
+    text-align: center;
+    font-size: 80px;
+    text-decoration: underline;
+  }
   
   img {
     opacity: 1;
@@ -114,14 +121,15 @@
     transition: 0.5s;
     padding-top: 60px;
     background-color: black;
-    color: white
+    color: white;
+    font-size: 30px;
+    font-family: 'Times New Roman', Times, serif;
   }
   
   .sidebar a,
   .dropdown-btn {
     padding: 8px 8px 8px 16px;
     text-decoration: none;
-    font-size: 27px;
     display: block;
     transition: 0.3s;
     color: var(--white);
@@ -132,6 +140,11 @@
     text-align: left;
     cursor: pointer;
     outline: none;
+  }
+
+  .dropdown-btn{
+    font-size: 30px;
+    font-family: 'Times New Roman', Times, serif;
   }
   
   .sidebar .closebtn {
@@ -194,14 +207,14 @@
   .sidebar a:hover,
   .dropdown-container a:hover,
   .dropdown-btn:hover {
-    background-color: var(--white);
-    color: var(--black);
+    background-color: white;
+    color: black;
   }
   
   .sidebar a.active,
   .dropdown-container a.active {
     background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
-    color: var(--white);
+    color: white;
   }
   
   .dropdown-container {
@@ -209,6 +222,7 @@
     background-color: #262626;
     padding-left: 8px;
     width: 100%;
+    font-size: 25px;
   }
   
   .fa-caret-down {
@@ -236,13 +250,6 @@
       margin: 0;
       font-family: 'Courier New', monospace;
       font-size: 17px;
-  }
-  
-  h1 {
-    font-family: Papyrus, fantasy;
-    text-align: center;
-    font-size: 70px;
-    text-decoration: underline;
   }
   
   .pie-chart {
