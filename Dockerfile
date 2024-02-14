@@ -24,5 +24,5 @@ COPY --from=build /target/*.jar /myapp/app.jar
 # Expose the port your application will run on
 EXPOSE 8080
 
-# Specify the command to run your application
+# Specify the command to run your application in Docker
 CMD ["java", "-jar", "app.jar"]
