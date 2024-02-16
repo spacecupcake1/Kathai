@@ -226,6 +226,40 @@ def GenreAnalysis():
 
     return render_template('GenreAnalysis.html', result_json=result_json)
 
+@app.route('/books/format')
+def FormatAnalysis():
+    
+    # Check if the user is logged in
+    if 'user_id' not in session:
+        flash('Please log in to access this page', 'error')
+        return redirect(url_for('show_login_form'))
+    
+    # Aggregation pipeline to group by ratings and count
+    pipeline = [
+        {
+            '$match': {
+                'Format': {'$ne': None}  # Exclude documents where Rating is null
+            }
+        },
+        {
+            '$group': {
+                '_id': '$Format',
+                'count': {'$sum': 1}
+            }
+        }
+    ]
+
+    # Execute the aggregation pipeline
+    result = collection.aggregate(pipeline)
+
+    # Convert the result to a list and print it
+    result_list = list(result)
+
+    result_json = dumps(result_list, default=str) 
+
+    print(result_json)
+
+    return render_template('FormatAnalysis.html', result_json=result_json)
 
 
 @app.route('/login')
