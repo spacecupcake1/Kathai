@@ -31,9 +31,11 @@
           <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-container">
+          <a href="/books/overview">Overview</a>
           <a href="/books/read" class="active">Reading Progress</a>
           <a href="/books/genre">Genre</a>
           <a href="/books/rating">Rating</a>
+          <a href="/books/format">Format</a>
         </div>
 
         <br />
@@ -50,29 +52,21 @@
           <div style="text-align: center">
             <br />
             <div style="font-size: 20px;">
-            <p style="color: gray; text-align: middle; font-size: 30px">
-              <u>Overview</u>
-            </p>
-            <p><b>Total Books: </b>{{total}}</p>
-            <p><b>Read Books: </b>{{readCounts.read}}</p>
-            <p><b>Unread Books: </b>{{readCounts.unread}}</p>
-          </div>
-            <br />
-            <br />
-            <br />
+
+              <select name="year" id="yearSelect">
+                    <option value="{{ year }}">2022</option>
+                    <option value="{{ year }}">2023</option>
+                    <option value="{{ year }}">2024</option>
+            </select>&nbsp;&nbsp;&nbsp;
 
             <p style="color: gray; text-align: middle; font-size: 30px">
-              <u>Books Read</u>
+              <u>Books read
+              </u>
             </p>
-            <canvas id="readPieChart" class="pie-chart"></canvas>
-            <br />
-            <br />
-            <br />
-
-            <p style="color: gray; text-align: middle; font-size: 30px">
-              <u>Pages Read</u>
-            </p>
-            <canvas id="pagePieChart" class="pie-chart"></canvas>
+            <canvas id="readBarChart" class="bar-chart"></canvas>
+                <br />
+                <br />
+                <br />
           </div>
         </div>
 
@@ -84,123 +78,48 @@
 
     <script th:inline="javascript">
       /*<![CDATA[*/
-      var readCounts = JSON.parse('{{ readCounts | tojson | safe }}');
-      var pageCounts = JSON.parse('{{ pageCounts | tojson | safe }}');
-      console.log("Parsed Book Counts: ", readCounts);
-      console.log("Parsed Page Counts: ", pageCounts);
+      var readCounts = {{ result_json | tojson | replace("\'", "\"") | replace("\n", "") | replace("\r", "") | safe }};
 
-      const bookctx = document.getElementById("readPieChart").getContext("2d");
-      const pagectx = document.getElementById("pagePieChart").getContext("2d");
+      console.log("Original Read Counts: ", readCounts);
 
-      new Chart(bookctx, {
-        type: "pie",
-        data: {
-          labels: ["Read", "Unread"],
-          datasets: [
-            {
-              data: [readCounts.read, readCounts.unread],
-              backgroundColor: ["green", "red"],
-              borderColor: ["black", "black"],
-              borderWidth: 3,
-            },
-          ],
-        },
-        options: {
-          title: {
-            display: true,
+      readCounts = JSON.parse(readCounts)
+      console.log("Parsed Read Counts: ", readCounts);
+
+      const barCtx = document.getElementById("readBarChart").getContext("2d");
+
+      // Bar Chart
+      new Chart(barCtx, {
+          type: "bar",
+          data: {
+              labels: readCounts.map(item => item.month),
+              datasets: [
+                  {
+                      data: readCounts.map(item => item.count),
+                      backgroundColor: "rgba(54, 162, 235, 0.6)",
+                      borderColor: "rgba(0, 0, 0, 1)",
+                      borderWidth: 1,
+                  },
+              ],
           },
-          legend: {
-            display: true,
-            position: "right",
-            labels: {
-              fontColor: "rgb(0, 0, 0)",
-              fontSize: 20,
-              usePointStyle: {
-                fontSize: 30,
-              } ,
-              generateLabels: function (chart) {
-                var data = chart.data;
-                if (data.labels.length && data.datasets.length) {
-                  return data.labels.map(function (label, i) {
-                    var meta = chart.getDatasetMeta(0);
-                    var ds = data.datasets[0];
-                    var arc = meta.data[i];
-                    var value = ds.data[i];
-                    var percentage = (
-                      (value / ds.data.reduce((a, b) => a + b, 0)) *
-                      100
-                    ).toFixed(2);
-                    return {
-                      // text: label + ": " + value + " (" + percentage + "%)",
-                      text: label + ": " + " (" + percentage + "%)",
-                      hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
-                      index: i,
-                      fillStyle: ds.backgroundColor[i],
-                    };
-                  });
-                }
-                return [];
+          options: {
+              title: {
+                  display: true,
+                  //text: 'Books Read in Each Month',
               },
-            },
-          },
-          responsive: true,
-        },
-      });
-
-
-      new Chart(pagectx, {
-        type: "pie",
-        data: {
-          labels: ["Read", "Unread"],
-          datasets: [
-            {
-              data: [pageCounts.read, pageCounts.unread],
-              backgroundColor: ["green", "red"],
-              borderColor: ["black", "black"],
-              borderWidth: 3,
-            },
-          ],
-        },
-        options: {
-          title: {
-            display: true,
-          },
-          legend: {
-            display: true,
-            position: "right",
-            labels: {
-              fontColor: "rgb(0, 0, 0)",
-              fontSize: 20,
-              usePointStyle: {
-                fontSize: 30,
-              } ,
-              generateLabels: function (chart) {
-                var data = chart.data;
-                if (data.labels.length && data.datasets.length) {
-                  return data.labels.map(function (label, i) {
-                    var meta = chart.getDatasetMeta(0);
-                    var ds = data.datasets[0];
-                    var arc = meta.data[i];
-                    var value = ds.data[i];
-                    var percentage = (
-                      (value / ds.data.reduce((a, b) => a + b, 0)) *
-                      100
-                    ).toFixed(2);
-                    return {
-                      // text: label + ": " + value + " (" + percentage + "%)",
-                      text: label + ": " + " (" + percentage + "%)",
-                      hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
-                      index: i,
-                      fillStyle: ds.backgroundColor[i],
-                    };
-                  });
-                }
-                return [];
+              legend: {
+                  display: false,
               },
-            },
+              responsive: true,
+              scales: {
+                  y: {
+                      beginAtZero: true,
+                      stepSize: 1,  // Adjust as needed
+                  },
+                  x: {
+                      // Customize x-axis options if necessary
+                  },
+              },
           },
-          responsive: true,
-        },
       });
 
       function openNav() {

@@ -3,6 +3,8 @@ from pymongo import MongoClient
 from bson.json_util import dumps
 from flask_pymongo import PyMongo
 from flask_paginate import Pagination, get_page_parameter
+from datetime import datetime
+from bson.son import SON
 import pymongo
 
 app = Flask(__name__)
@@ -124,8 +126,8 @@ def book_desc(id):
     
     
     
-@app.route('/books/read')
-def ReadAnalysis():
+@app.route('/books/overview')
+def overview():
 
     # Check if the user is logged in
     if 'user_id' not in session:
@@ -161,7 +163,7 @@ def ReadAnalysis():
     readCounts = {"read": read_count, "unread": not_read_count}
     pageCounts = {"read": aggregation_result['pages_read'], "unread": pages_unread}
 
-    return render_template('ReadAnalysis.html', readCounts=readCounts, pageCounts=pageCounts, total=total)
+    return render_template('Overview.html', readCounts=readCounts, pageCounts=pageCounts, total=total)
 
 @app.route('/books/rating')
 def RatingAnalysis():
@@ -261,6 +263,36 @@ def FormatAnalysis():
 
     return render_template('FormatAnalysis.html', result_json=result_json)
 
+@app.route('/books/read')
+def ReadAnalysis():
+    # Extract year from the request
+    year_query = request.args.get('year')
+    
+    # Determine the date range based on the selected year
+    if year_query:
+        start_date = datetime(int(year_query), 1, 1)
+        end_date = datetime(int(year_query), 12, 31)
+    else:
+        # Default date range (all years)
+        start_date = datetime(2023, 1, 1)
+        end_date = datetime(2023, 12, 31)
+
+    # MongoDB aggregation pipeline to count books for each month
+    pipeline = [
+        {"$match": {"Ended": {"$gte": start_date, "$lte": end_date}}},
+        {"$group": {"_id": {"month": {"$month": "$Ended"}}, "count": {"$sum": 1}}},
+        {"$project": {"_id": 0, "month": "$_id.month", "count": 1}},
+        {"$sort": SON([("month", 1)])}  # Sort results by month
+    ]
+
+    result = list(collection.aggregate(pipeline))
+
+    result_json = dumps(result, default=str) 
+
+    print(result_json)
+
+    # Render the template with data
+    return render_template('ReadAnalysis.html', result_json=result_json)
 
 @app.route('/login')
 def show_login_form():

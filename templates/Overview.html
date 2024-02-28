@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <title>Book Reading Chart</title>
+  </head>
+
+  <body>
+    <div class="item1">
+      <img
+        src="../static/images/f3.png"
+        th:src="@{/images/f3.png}"
+        alt="Title"
+      />
+    </div>
+
+    <div class="item2"> 
+      <button class="openbtn" onclick="openNav()"><span>☰ Menu</span></button>
+      <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">x</a>
+
+        <a href="/">Home</a><br />
+
+        <button class="dropdown-btn">
+          Analysis
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+          <a href="/books/overview" class="active">Overview</a>
+          <a href="/books/read">Reading Progress</a>
+          <a href="/books/genre">Genre</a>
+          <a href="/books/rating">Rating</a>
+          <a href="/books/format">Format</a>
+        </div>
+
+        <br />
+        <a href="/logout">Logout</a><br />
+      </div>
+    </div>
+
+    <div class="transbox">
+      <div class="grid-container">
+        <div class="item3">
+          <h1>
+            Overview
+          </h1>
+          <div style="text-align: center">
+            <br />
+            <div style="font-size: 20px;">
+            <p style="color: gray; text-align: middle; font-size: 30px">
+            </p>
+            <p><b>Total Books: </b>{{total}}</p>
+            <p><b>Read Books: </b>{{readCounts.read}}</p>
+            <p><b>Unread Books: </b>{{readCounts.unread}}</p>
+          </div>
+            <br />
+            <br />
+            <br />
+
+            <p style="color: gray; text-align: middle; font-size: 30px">
+              <u>Books Read</u>
+            </p>
+            <canvas id="readPieChart" class="pie-chart"></canvas>
+            <br />
+            <br />
+            <br />
+
+            <p style="color: gray; text-align: middle; font-size: 30px">
+              <u>Pages Read</u>
+            </p>
+            <canvas id="pagePieChart" class="pie-chart"></canvas>
+          </div>
+        </div>
+
+        <!-- <div class="item4">
+          <b>footer</b>
+        </div> -->
+      </div>
+    </div>
+
+    <script th:inline="javascript">
+      /*<![CDATA[*/
+      var readCounts = JSON.parse('{{ readCounts | tojson | safe }}');
+      var pageCounts = JSON.parse('{{ pageCounts | tojson | safe }}');
+      console.log("Parsed Book Counts: ", readCounts);
+      console.log("Parsed Page Counts: ", pageCounts);
+
+      const bookctx = document.getElementById("readPieChart").getContext("2d");
+      const pagectx = document.getElementById("pagePieChart").getContext("2d");
+
+      new Chart(bookctx, {
+        type: "pie",
+        data: {
+          labels: ["Read", "Unread"],
+          datasets: [
+            {
+              data: [readCounts.read, readCounts.unread],
+              backgroundColor: ["green", "red"],
+              borderColor: ["black", "black"],
+              borderWidth: 3,
+            },
+          ],
+        },
+        options: {
+          title: {
+            display: true,
+          },
+          legend: {
+            display: true,
+            position: "right",
+            labels: {
+              fontColor: "rgb(0, 0, 0)",
+              fontSize: 20,
+              usePointStyle: {
+                fontSize: 30,
+              } ,
+              generateLabels: function (chart) {
+                var data = chart.data;
+                if (data.labels.length && data.datasets.length) {
+                  return data.labels.map(function (label, i) {
+                    var meta = chart.getDatasetMeta(0);
+                    var ds = data.datasets[0];
+                    var arc = meta.data[i];
+                    var value = ds.data[i];
+                    var percentage = (
+                      (value / ds.data.reduce((a, b) => a + b, 0)) *
+                      100
+                    ).toFixed(2);
+                    return {
+                      // text: label + ": " + value + " (" + percentage + "%)",
+                      text: label + ": " + " (" + percentage + "%)",
+                      hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                      index: i,
+                      fillStyle: ds.backgroundColor[i],
+                    };
+                  });
+                }
+                return [];
+              },
+            },
+          },
+          responsive: true,
+        },
+      });
+
+
+      new Chart(pagectx, {
+        type: "pie",
+        data: {
+          labels: ["Read", "Unread"],
+          datasets: [
+            {
+              data: [pageCounts.read, pageCounts.unread],
+              backgroundColor: ["green", "red"],
+              borderColor: ["black", "black"],
+              borderWidth: 3,
+            },
+          ],
+        },
+        options: {
+          title: {
+            display: true,
+          },
+          legend: {
+            display: true,
+            position: "right",
+            labels: {
+              fontColor: "rgb(0, 0, 0)",
+              fontSize: 20,
+              usePointStyle: {
+                fontSize: 30,
+              } ,
+              generateLabels: function (chart) {
+                var data = chart.data;
+                if (data.labels.length && data.datasets.length) {
+                  return data.labels.map(function (label, i) {
+                    var meta = chart.getDatasetMeta(0);
+                    var ds = data.datasets[0];
+                    var arc = meta.data[i];
+                    var value = ds.data[i];
+                    var percentage = (
+                      (value / ds.data.reduce((a, b) => a + b, 0)) *
+                      100
+                    ).toFixed(2);
+                    return {
+                      // text: label + ": " + value + " (" + percentage + "%)",
+                      text: label + ": " + " (" + percentage + "%)",
+                      hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                      index: i,
+                      fillStyle: ds.backgroundColor[i],
+                    };
+                  });
+                }
+                return [];
+              },
+            },
+          },
+          responsive: true,
+        },
+      });
+
+      function openNav() {
+        document.getElementById("mySidebar").style.width = "250px";
+        sidebar.style.marginLeft = "250px";
+      }
+
+      function closeNav() {
+        document.getElementById("mySidebar").style.width = "0";
+        sidebar.style.marginLeft = "0";
+      }
+
+      var dropdown = document.getElementsByClassName("dropdown-btn");
+      var i;
+
+      for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function () {
+          console.log("Button Clicked");
+          this.classList.toggle("active");
+          var dropdownContent = this.nextElementSibling;
+          if (dropdownContent.style.display === "block") {
+            dropdownContent.style.display = "none";
+          } else {
+            dropdownContent.style.display = "block";
+          }
+        });
+
+        console.log(dropdown);
+      }
+      /*]]>*/
+    </script>
+  </body>
+</html>
