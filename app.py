@@ -18,7 +18,7 @@ mongo = PyMongo(app)
 # Connect to MongoDB
 client = MongoClient('mongodb://rigani:Modao@localhost:27017/kathai')
 db = client['kathai']
-collection = db.feb
+collection = db.aug
 
 
 
